@@ -1,4 +1,5 @@
-﻿using System;
+﻿using lab5ProgTech.objects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,21 +13,29 @@ namespace lab5ProgTech
 {
     public partial class Form1 : Form
     {
+        MyRectangle myRect;
+        List<BaseObject> objects = new List<BaseObject>();
+
         public Form1()
         {
             InitializeComponent();
+          
+            objects.Add(new MyRectangle(50, 50, 0));
+            objects.Add(new MyRectangle(100, 100, 45));
+            objects.Add(new MyRectangle(200, 200, 90));
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)
         {
-            var g = e.Graphics; // вытащили объект графики из события
+            var g = e.Graphics;
 
-            g.Clear(Color.Aqua); //залили фон
+            g.Clear(Color.White);
 
-            g.FillRectangle(new SolidBrush(Color.Yellow), 200, 100, 50, 30); // заливка прямоугольника
-            g.DrawRectangle(new Pen(Color.Red), 200, 100, 50, 30);  // рисуем прямоугольную рамку
-            
+            foreach(var obj in objects)
+            {
+                g.Transform = obj.GetTransform();
+                obj.Render(g);
+            }
         }
-
     }
 }
