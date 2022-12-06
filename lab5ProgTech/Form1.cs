@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace lab5ProgTech
 {
@@ -17,7 +18,11 @@ namespace lab5ProgTech
         List<BaseObject> objects = new List<BaseObject>();
         Player player;
         Marker marker;
+        MyRectangle circleOne;
+        MyRectangle circleTwo;
         public double vX, vY;
+
+        Random rand = new Random();
 
         public Form1()
         {
@@ -25,14 +30,29 @@ namespace lab5ProgTech
 
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
+            circleOne = new MyRectangle(rand.Next(30, pbMain.Width - 30), rand.Next(30, pbMain.Height - 30), 0);
+            circleTwo = new MyRectangle(rand.Next(30, pbMain.Width - 30), rand.Next(30, pbMain.Height - 30), 0);
+
+
+            player.OnOverlap += (p, obj) =>
+            {
+                txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+            };
+            
+
+            player.OnMarkerOverlap += (m) =>
+            {
+                objects.Remove(m);
+                marker = null;
+            };
 
             objects.Add(marker);
-            
             objects.Add(player);
-          
             objects.Add(new MyRectangle(50, 50, 0));
             objects.Add(new MyRectangle(100, 100, 45));
             objects.Add(new MyRectangle(200, 200, 90));
+            objects.Add(circleOne);
+            objects.Add(circleTwo);
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)
@@ -41,22 +61,21 @@ namespace lab5ProgTech
 
             g.Clear(Color.White);
 
+            updatePlayer();
+
+            // пересчитываем пересечения
             foreach (var obj in objects.ToList())
             {
                 if (obj != player && player.Overlaps(obj, g))
                 {
-                    // это не трогаю
-                    txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
-
-                    // тут проверяю что достиг маркера
-                    if (obj == marker)
-                    {
-                        // если достиг, то удаляю маркер из оригинального objects
-                        objects.Remove(marker);
-                        marker = null; // и обнуляю маркер
-                    }
+                    player.Overlap(obj);
+                    obj.Overlap(player);
                 }
+            }
 
+            // рендерим объекты
+            foreach (var obj in objects)
+            {
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
@@ -64,8 +83,6 @@ namespace lab5ProgTech
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            updatePlayer();
-
             pbMain.Invalidate();
         }
 
