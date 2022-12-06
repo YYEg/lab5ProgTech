@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +14,26 @@ namespace lab5ProgTech.objects
         {
 
         }
+
         public override void Render(Graphics g)
         {
-            g.FillRectangle(new SolidBrush(Color.Yellow), 0, 0, 50, 30);
-            g.DrawRectangle(new Pen(Color.Red, 2), 0, 0, 50, 30);
+            if (color)
+            {
+                g.FillEllipse(new SolidBrush(Color.LawnGreen), -15, -15, 30, 30);
+            }
+            else
+            {
+                g.FillEllipse(new SolidBrush(Color.White), -15, -15, 30, 30);
+            }
+
+        }
+
+        public override GraphicsPath GetGraphicsPath()
+        {
+            var path = base.GetGraphicsPath();
+            path.AddEllipse(0, 0, 30, 30);
+
+            return path;
         }
     }
 }

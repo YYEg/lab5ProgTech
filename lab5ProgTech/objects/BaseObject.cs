@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 
 namespace lab5ProgTech.objects
@@ -14,13 +9,22 @@ namespace lab5ProgTech.objects
         public float X;
         public float Y;
         public float Angle;
-        public Action<BaseObject, BaseObject> OnOverlap;
+        public Action<BaseObject, BaseObject> OnOverlap;        
+        public bool color = true;
 
         public BaseObject(float x, float y, float angle)
         {
             X = x;
             Y = y;
             Angle = angle;
+        }
+        public virtual void Render(Graphics g)
+        {
+
+        }
+        public virtual void BlackRender(Graphics g)
+        {
+
         }
 
         public Matrix GetTransform()
@@ -29,11 +33,7 @@ namespace lab5ProgTech.objects
             matrix.Translate(X, Y); // смещаем ее в пространстве
             matrix.Rotate(Angle);
             return matrix;
-        }
-        public virtual void Render(Graphics g) // виртуальный метод для отрисовки
-        {
-            // тут пусто
-        }
+        }        
 
         public virtual GraphicsPath GetGraphicsPath()
         {

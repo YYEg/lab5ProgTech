@@ -1,5 +1,4 @@
-﻿using _5_laba.Objects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -15,8 +14,8 @@ namespace lab5ProgTech.objects
         public float vX, vY;
         public Action<Marker> OnMarkerOverlap;
         public Action<RedZone> OnRedOverlap;
-
-
+        public Action<MyRectangle> OnScoreOverlap;
+        
 
         public Player(float x, float y, float angle) : base(x, y, angle)
         {
@@ -25,18 +24,18 @@ namespace lab5ProgTech.objects
 
         public override void Render(Graphics g)
         {
-            g.FillEllipse(
-                new SolidBrush(Color.DeepSkyBlue),
-                -15, -15,
-                30, 30);
-            g.DrawEllipse(
-                new Pen(Color.Black, 2),
-                -15, -15,
-                30, 30);
-            g.DrawLine(
-                new Pen(Color.Black, 2),
-                0, 0,
-                25, 0);
+            if (color)
+            {
+                g.FillEllipse(new SolidBrush(Color.DodgerBlue), -15, -15, 30, 30);
+                g.DrawEllipse(new Pen(Color.Black, 2), -15, -15, 30, 30);
+                g.DrawLine(new Pen(Color.Black, 2), 0, 0, 25, 0);
+            }
+            else
+            {
+                g.FillEllipse(new SolidBrush(Color.White), -15, -15, 30, 30);
+                g.DrawEllipse(new Pen(Color.Black, 2), -15, -15, 30, 30);
+                g.DrawLine(new Pen(Color.Black, 2), 0, 0, 25, 0);
+            }
         }
         public override GraphicsPath GetGraphicsPath()
         {
@@ -52,15 +51,16 @@ namespace lab5ProgTech.objects
             {
                 OnMarkerOverlap(obj as Marker);
             }
-            //---
-           /* if (obj is MyRectangle)
+            
+            if (obj is MyRectangle)
             {
-                OnMyRectangleOverlap(obj as MyRectangle);
-            }*/
+                OnScoreOverlap(obj as MyRectangle);
+            }
             if (obj is RedZone)
             {
                 OnRedOverlap(obj as RedZone);
             }
+            
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using lab5ProgTech.objects;
 
-namespace _5_laba.Objects
+namespace lab5ProgTech.objects
 {
     class RedZone : BaseObject
     {
@@ -20,11 +20,22 @@ namespace _5_laba.Objects
         // переопределяем Render
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Pink), 0 - x / 2, 0 - y / 2, x, y);
-            x++;
-            y++;
+            
+            if (color)
+            {
+                g.FillEllipse(new SolidBrush(Color.Red), 0 - x / 2, 0 - y / 2, x, y);
+                x++;
+                y++;
+            }
+            else
+            {
+                g.FillEllipse(new SolidBrush(Color.White), 0 - x / 2, 0 - y / 2, x, y);
+                x++;
+                y++;
+            }
 
         }
+
         //---
         public override GraphicsPath GetGraphicsPath()
         {
