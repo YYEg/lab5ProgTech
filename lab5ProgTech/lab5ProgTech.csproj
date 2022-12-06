@@ -53,6 +53,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="objects\BaseObject.cs" />
+    <Compile Include="objects\Marker.cs" />
     <Compile Include="objects\MyRectangle.cs" />
     <Compile Include="objects\Player.cs" />
     <Compile Include="Program.cs" />
