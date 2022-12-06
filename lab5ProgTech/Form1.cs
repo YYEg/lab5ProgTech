@@ -1,4 +1,5 @@
-﻿using lab5ProgTech.objects;
+﻿using _5_laba.Objects;
+using lab5ProgTech.objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace lab5ProgTech
         MyRectangle circleOne;
         MyRectangle circleTwo;
         public double vX, vY;
+        RedZone redZone;
 
         Random rand = new Random();
 
@@ -32,6 +34,8 @@ namespace lab5ProgTech
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
             circleOne = new MyRectangle(rand.Next(30, pbMain.Width - 30), rand.Next(30, pbMain.Height - 30), 0);
             circleTwo = new MyRectangle(rand.Next(30, pbMain.Width - 30), rand.Next(30, pbMain.Height - 30), 0);
+            redZone = new RedZone(rand.Next(30, pbMain.Width - 30), rand.Next(30, pbMain.Height - 30), 0);
+
 
 
             player.OnOverlap += (p, obj) =>
@@ -46,6 +50,17 @@ namespace lab5ProgTech
                 marker = null;
             };
 
+            player.OnRedOverlap += (m) =>
+            {
+                objects.Remove(m);
+                redZone = null;
+                redZone = new RedZone(0, 0, 0);
+                objects.Add(redZone);
+                redZone.X = rand.Next(30, pbMain.Width - 30);
+                redZone.Y = rand.Next(30, pbMain.Height - 30);
+                /*score--;*/
+            };
+
             objects.Add(marker);
             objects.Add(player);
             objects.Add(new MyRectangle(50, 50, 0));
@@ -53,6 +68,7 @@ namespace lab5ProgTech
             objects.Add(new MyRectangle(200, 200, 90));
             objects.Add(circleOne);
             objects.Add(circleTwo);
+            objects.Add(redZone);
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)

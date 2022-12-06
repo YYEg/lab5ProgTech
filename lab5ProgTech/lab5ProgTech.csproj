@@ -56,6 +56,7 @@
     <Compile Include="objects\Marker.cs" />
     <Compile Include="objects\MyRectangle.cs" />
     <Compile Include="objects\Player.cs" />
+    <Compile Include="objects\RedZone.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

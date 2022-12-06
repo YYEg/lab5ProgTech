@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _5_laba.Objects;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -13,6 +14,8 @@ namespace lab5ProgTech.objects
     {
         public float vX, vY;
         public Action<Marker> OnMarkerOverlap;
+        public Action<RedZone> OnRedOverlap;
+
 
 
         public Player(float x, float y, float angle) : base(x, y, angle)
@@ -53,11 +56,11 @@ namespace lab5ProgTech.objects
            /* if (obj is MyRectangle)
             {
                 OnMyRectangleOverlap(obj as MyRectangle);
-            }
-            if (obj is Red)
-            {
-                OnRedOverlap(obj as Red);
             }*/
+            if (obj is RedZone)
+            {
+                OnRedOverlap(obj as RedZone);
+            }
         }
     }
 }
