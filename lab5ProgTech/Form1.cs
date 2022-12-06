@@ -16,5 +16,17 @@ namespace lab5ProgTech
         {
             InitializeComponent();
         }
+
+        private void pbMain_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics; // вытащили объект графики из события
+
+            g.Clear(Color.Aqua); //залили фон
+
+            g.FillRectangle(new SolidBrush(Color.Yellow), 200, 100, 50, 30); // заливка прямоугольника
+            g.DrawRectangle(new Pen(Color.Red), 200, 100, 50, 30);  // рисуем прямоугольную рамку
+            
+        }
+
     }
 }
