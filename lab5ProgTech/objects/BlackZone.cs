@@ -18,13 +18,27 @@ namespace lab5ProgTech.objects
 
         public override void Render(Graphics g)
         {
-            foreach (var obj in outZone)
+            foreach(var c in inZone)
+            {
+                if (!outZone.Contains(c))
+                {
+                    c.color = false;
+                }
+            foreach(var c1 in outZone)
+                {
+                    if (!inZone.Contains(c1))
+                    {
+                        c1.color = true;
+                    }
+                }
+            }
+            /*foreach (var obj in outZone)
             {
                 if (!inZone.Contains(obj))
                 {
                     obj.color = true;
                 }
-            }
+            }*/
             g.FillRectangle(new SolidBrush(Color.Black), -100, -200, 200, 700);
             outZone = inZone.ToList();
             inZone.Clear();
@@ -39,8 +53,6 @@ namespace lab5ProgTech.objects
 
         public override void Overlap(BaseObject obj)
         {
-            BlackZoneOverlap(obj);
-            obj.color = false;
             inZone.Add(obj);
         }
     }
